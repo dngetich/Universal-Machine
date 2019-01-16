@@ -1,0 +1,115 @@
+/********************
+* COMP 40			*
+* Assignment #6		*
+* Universal Machine *
+*********************/ 
+
+/***********************
+*	  Names        *
+************************/ 
+David Ngetich 
+Anahita Sethi 
+
+/***********************
+*    Acknowledgments   *
+***********************/
+Thank you to the TA's for helping us at office hours. 
+Huge shoutout to Winston for helping us debug on the Tuesday
+before Thanksgiving, and Genevieve for helping us understand
+compile scripts. 
+
+/*********************** 
+*    Implementation    *
+***********************/ 
+We believe that all aspects of our program have been implemented
+correctly. 
+
+/****************************** 
+*    Departures from design   *
+*******************************/ 
+In our design, we had planned to represent the segmented memory
+using a Hanson sequence of pointers that point to sequences. 
+However, instead, we are now only using one sequence to keep
+track of the mapped memory, and a stack to keep track of the
+unmapped segments. We also changed some function headers and 
+return types in the segment.c interface, such as having the 
+get_instruction function in our execute.c interface instead. 
+
+/****************************** 
+*   Architecture of system    *
+*******************************/ 
+Our Universal Machine is made up of eight 32-bit registers, each
+holding one word, with memory divided into segments. The UM is 
+capable of executing 14 different instructions. Our program is 
+comprised of five modules (main, loader, execute, segment, bitpack)
+that interact with one another to emulate the UM. 
+
+um.c: This is our main program, which calls the loader and executer.
+
+load.c: Our loader interface reads in the input file and converts it
+to a 32-bit word using the Bitpack interface. 
+
+execute.c: This interface contains the instructions needed for our UM,
+to run. 
+
+segment.c: This interface is used to handle the memory in our program.
+We chose to use a Hanson sequence to represent the mapped memory, 
+and a stack to handle unmapped segments. 
+
+/****************************** 
+*    How long it takes UM     *
+*		to execute 50 		  *
+*	  million instructions    *
+*******************************/ 
+
+
+/***************
+*   UM TESTS   *
+****************/ 
+
+The way we have been conducting our unit testing is as follows:
+./um [testfilename].um < [inputfile].0 > [outputfile].1
+
+Depending on whether or not our test file requires an input, 
+and whether we expect an output. 
+
+1) halt.um: calls halt, ends the program, and frees all memory. 
+	Does not output anything. 
+
+2) loadval.um: calls load value, outputs that value, then calls halt.
+	Loads in the value 65, which will output "A" in loadval.1 
+
+3) print-six.um: tests that a value of 6 is correctly outputted
+	after it has been loaded into a given register, and then halts.
+
+4) input-output.um: calls input 5 times, calls output 5 times,
+	then calls halt. Takes in input file with "12345", and will
+	thus output 12345. 
+
+5) add.um: calls input twice, calls add, output, and then halt.
+	The input file has "16" in it. 1 in ASCII is 49, and 6 is
+	54. 49 + 54 = 103, which will output its ASCII value, 'g',
+	in add.1
+
+6) multiply.um: loads a 6, then a 12, then multiplies them. 
+	Then loads a 1 and a 73, and multiplies the two. The
+	ascii values (6x12 = 72 and 1x73=73, H and I, respectively),
+	will output HI.
+
+7) divide.um: loads two values at a time, divides them, and outputs
+	them. This will output YAY and then halt.
+
+8) nand.um: loads three values, 0, 64, and 63,
+   then calls nand, and outputs the result, which is a @. 
+
+9) memory.um: tests that our UM can map a large amount of memory. 
+	If the memory cannot be allocated, then an error message gets 
+	printed to stderr, and the program exits. 
+
+/************************
+*	  	  Hours			* 
+************************/ 
+We spent approximately 4 hours analyzing the assignment.
+We spent approximately 4 hours preparing our design. 
+We spent approximately 20 hours solving the problems. 
+
